@@ -8,7 +8,11 @@ form.addEventListener('submit', function (e) {
     fetch('https://api.github.com/users/' + input)
         .then((result) => {
             if (result.status == 200) {
+                document.getElementById('error').style.visibility = "hidden";
+
+                document.getElementsByClassName('results')[0].style.visibility = "visible";
                 return result.json();
+
             } else if (result.status == 404) {
                 document.getElementById('error').innerHTML = `<p>The user was not found</p>`;
                 document.getElementById('error').style.visibility = "visible";
@@ -18,12 +22,8 @@ form.addEventListener('submit', function (e) {
 
         })
         .then((data) => {
+
             console.log(data);
-
-
-            document.getElementById('error').style.visibility = "hidden";
-
-            document.getElementsByClassName('results')[0].style.visibility = "visible";
 
             document.getElementById('photo').innerHTML = `<a target="_blank" href="https://www.github.com/${input}">  <img src="${data.avatar_url}"></a>`;
             if (data.name == null) {
@@ -76,5 +76,8 @@ form.addEventListener('submit', function (e) {
              ${data.company}</p>`;
 
             document.getElementsByClassName('results')[0].style.backgroundColor = '#19253f';
+
+
+
         });
 });
